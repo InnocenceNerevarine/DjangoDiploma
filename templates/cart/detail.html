@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="bread-inner">
+						<ul class="bread-list">
+							<li><a href="{% url 'home' %}">Главная<i class="bi bi-arrow-right"></i></a></li>
+							<li class="active"><a href="#">Корзина</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% if not order.products.count %}
+	<h3 class="text-center mt-5 mb-5">Ваша корзина пуста</h3>
+	{% else %}
+	<div class="shopping-cart section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<table class="table shopping-summery">
+						{% for order_product in order.products.all %}
+						<thead>
+							<tr class="main-hading">
+								<th>Изображение товара</th>
+								<th>Название</th>
+								<th class="text-center">Цена за ед.</th>
+								<th class="text-center">Количество</th>
+								<th class="text-center">Итого</th>
+								<th class="text-center"><i class="bi bi-trash-fill"></i></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="image" data-title="Изображение товара"><img src="{{ order_product.product.image.url }}" alt="#"></td>
+								<td class="product-des" data-title="Название">
+									<p class="product-name"><a href="{% url 'product_detail' order_product.product.slug %}">{{ order_product.product.title }}</a></p>
+								</td>
+								<td class="price" data-title="Цена за ед."><span>{{ order_product.product.get_discount_price}} ₽.</span></td>
+								<td class="qty" data-title="Количество">
+										<a href="{% url 'remove_single_product' order_product.product.slug %}"><i class="bi bi-dash-lg"></i></a>
+										{{ order_product.quantity }}
+										<a href="{% url 'add_product' order_product.product.slug %}"><i class="bi bi-plus-circle-fill"></i></a>
+								</td>
+								<td class="total-amount" data-title="Итого"><span>{{ order_product.get_total_item_price }} ₽.</span></td>
+								<td class="action" data-title="Убрать из корзины"><a href="{% url 'remove_product' order_product.product.slug  %}"><i class="bi bi-trash-fill"></i></a></td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="total-amount">
+						<div class="row">
+							<div class="col-lg-8 col-md-5 col-12">
+							</div>
+							<div class="col-lg-4 col-md-7 col-12">
+								{% if order.get_total %}
+								<div class="right">
+									<ul>
+										<li>Сумма корзины<span>{{ order.get_total }} ₽.</span></li>
+										<li>Доставка<span>Бесплатно</span></li>
+										<li class="last">Вы заплатите<span>{{ order.get_total }} ₽.</span></li>
+									</ul>
+									<div class="button5">
+										<a href="{% url 'checkout' %}" class="btn">Оформить заказ</a>
+										<a href="{% url 'home' %}" class="btn">Продолжить покупки</a>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+{% endblock content %}

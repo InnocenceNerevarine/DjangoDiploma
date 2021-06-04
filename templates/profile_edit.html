@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="bread-inner">
+						<ul class="bread-list">
+							<li><a href="{% url 'home' %}">Главная<i class="bi bi-arrow-right"></i></a></li>
+							<li class="active"><a href="#">Изменить профиль</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<center>
+	<form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Ваша информация</legend>
+            {% for field in u_form %}
+        <div class="row">
+            {{field.label_tag}}
+            <div class="col-md-10">{{field}}</div>
+        </div>
+        {% endfor %}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">fdfs</button>
+        </div>
+    </form>
+</center>
+{% endblock content %}

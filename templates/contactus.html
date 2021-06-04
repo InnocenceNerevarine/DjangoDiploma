@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="bread-inner">
+						<ul class="bread-list">
+							<li><a href="{% url 'home' %}">Главная<i class="bi bi-arrow-right"></i></a></li>
+							<li class="active"><a href="#">Связаться с нами</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<center>
+		{% if messages %}
+        {% for message in messages %}
+             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+        {% endfor %}
+    {% endif %}
+	</center>
+	<section id="contact-us" class="contact-us section">
+		<div class="container">
+				<div class="contact-head">
+					<div class="row">
+						<div class="col-lg-8 col-12">
+							<div class="form-main">
+								<div class="title">
+									<h4>Связаться</h4>
+									<h3>Написать нам сообщение</h3>
+								</div>
+								<form class="form" method="POST" action="">
+									{% csrf_token %}
+									<div class="row">
+										<div class="col-lg-6 col-12">
+											<div class="form-group">
+												{% for field in form %}
+												<label>{{field.label_tag}}</label>
+												{{field}}
+												{% endfor %}
+											</div>
+										</div>
+										<div class="col-12">
+											<div class="form-group button">
+												<button type="submit" class="btn">Отправить сообщение</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="col-lg-4 col-12">
+							<div class="single-head">
+								<div class="single-info">
+									<i class="bi bi-phone"></i>
+									<h4 class="title">Позвонить нам:</h4>
+									<ul>
+										<li>+7(4712)50-47-27</li>
+									</ul>
+								</div>
+								<div class="single-info">
+									<i class="bi bi-envelope-open"></i>
+									<h4 class="title">Email:</h4>
+									<ul>
+										<li><a href="mailto:info@yourwebsite.com">info@provodkaru.com</a></li>
+										<li><a href="mailto:info@yourwebsite.com">support@provodkaru.com</a></li>
+									</ul>
+								</div>
+								<div class="single-info">
+									<i class="bi bi-geo-alt"></i>
+									<h4 class="title">Наш адрес:</h4>
+									<ul>
+										<li>г.Курск, улица 1-я Фатежская 73/3</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</section>
+{% endblock content %}

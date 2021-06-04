@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="main-body">
+          <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Личный кабинет</li>
+            </ol>
+          </nav>
+    </div>
+          {% if messages %}
+
+            {% for message in messages %}
+            <div class="alert alert-info">
+                {{ message }}
+            </div>
+            {% endfor %}
+          {% endif %}
+  <div class="container emp-profile">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            {% if request.user.profile_pic %}
+                            <img src="{{ request.user.profile_pic.url}}" alt=""/>
+                            {% else %}
+                            <img src="https://kip.pt/wp-content/uploads/2019/11/camera.jpg"/>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        {{ request.user.last_name }}  {{ request.user.first_name }}
+                                    </h5>
+                                    <h6>
+                                       {% if request.user.is_staff %}
+                                        Приветствую сотрудник {{ request.user.username }}
+                                       {% else %}
+                                        Доброго времени суток, дорогой покупатель {{ request.user.username }}
+                                      {% endif %}
+                                    </h6>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">О вас</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Ваши заказы</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{% url 'profile_edit' %}">ddd</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Логин</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ request.user.username }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Имя</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ request.user.first_name }}</p>
+                                            </div>
+                                        </div>
+                                         <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Фамилия</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ request.user.last_name }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ request.user.email }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Номер телефона</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ request.user.phone }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Адрес</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ request.user.address }}</p>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                {% if not orders.count %}
+                            <div class="col-md-12" style="margin-top: 300px; margin-bottom: 300px;">
+                                <h3>У вас еще нет заказов.<a href="{% url 'home' %}">Начните делать покупки</a></h3>
+                            </div>
+                            {% else %}
+                                        <div class="row">
+                                            <table class="table table-bordered">
+                                            <thead class="thead-dark">
+                                                <th scope="col">Номер</th>
+                                                <th scope="col">Статус</th>
+                                                <th scope="col">Сумма</th>
+                                                <th scope="col">Товар</th>
+                                                <th scope="col">Дополнительно</th>
+                                            </thead>
+                                            <tbody>
+                                                {% for order in orders %}
+                                                    <tr>
+                                                        <th scope="row">{{ order.id }}</th>
+                                                        <td>{{ order.get_status_display }}</td>
+                                                        <td>{{ order.get_total }} ₽.</td>
+                                                        <td>
+                                                            <ul>
+                                                                {% for order_product in order.products.all %}
+                                                                <li>{{ order_product.product.title }} x {{ order_product.quantity }}шт</li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                        <button class="btn btn-info" data-toggle="modal" data-target="#exampleModal-{{ order.id }}" >Дополнительно</button>
+                                                        <div class="modal fade" id="exampleModal-{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                      <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                          <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Детализация заказа</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                              <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                            <h4 class="text-center">Товар</h4>
+                                                              <table class="table">
+                                                                  <thead>
+                                                                  <tr>
+                                                                       <th scope="col">Наименование</th>
+                                                                       <th scope="col">Изображение</th>
+                                                                       <th scope="col">Цена</th>
+                                                                       <th scope="col">Количество</th>
+                                                                       <th scope="col">Общая цена</th>
+                                                                  </tr>
+                                                                  </thead>
+                                                                  <tbody>
+                                                                    {% for order_product in order.products.all %}
+                                                                        <tr>
+                                                                            <th scope="row">{{ order_product.product.title }}</th>
+                                                                            <td class="w-25"><img src="{{ order_product.product.image.url }}" class="img-fluid"></td>
+                                                                            <td><strong>{{ order_product.product.get_discount_price}} ₽.</strong> ₽.</td>
+                                                                            <td>{{ order_product.quantity }}</td>
+                                                                            <td>{{ order_product.get_total_item_price }} ₽.</td>
+                                                                        </tr>
+                                                                    {% endfor %}
+                                                                        <tr>
+                                                                            <td colspan="2"></td>
+                                                                            <td>Итого: </td>
+                                                                            <td>{{ order.get_total }} ₽.</td>
+                                                                        </tr>
+                                                                  </tbody>
+                                                              </table>
+                                                              <hr>
+                                                              <h4 class="text-center">Дополнительная информация</h4>
+                                                              <p>Имя: <strong>{{ request.user.first_name }}</strong></p>
+                                                              <p>Фамилия: <strong>{{ request.user.last_name }}</strong></p>
+                                                              <p>Номер телефона: <strong>{{ request.user.phone }}</strong></p>
+                                                              <p>Адрес: <strong>{{ request.user.address }}</strong></p>
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                        </div>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                            </table>
+                                        </div>
+                                 {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+  </div>
+</div>
+{% endblock content %}

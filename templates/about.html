@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+		<div class="breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="bread-inner">
+							<ul class="bread-list">
+								<li><a href="{% url 'home' %}">Главная<i class="bi bi-arrow-right"></i></a></li>
+								<li class="active"><a href="#">О нас</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<div class="pricing-header px-4 py-3 pt-md-4 pb-md-4 mx-auto text-left">
+     <div class="section-title">
+          <h2 class="display-4">О нас</h2>
+          <p class="">Да кто же мы такие?</p>
+     </div>
+      <section class="blog-single section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="blog-single-main">
+							<div class="row">
+								<div class="col-12">
+									<div class="image">
+										<img src="{% static 'img/logo.png' %}" alt="Логотип">
+									</div>
+									<div class="blog-detail">
+										<h2 class="blog-title">Проводка РУ - Интернет магазин?</h2>
+										<div class="blog-meta">
+										</div>
+										<div class="content">
+											<p>Мы не виртуальный интернет-магазин В отличие от других интернет-магазинов, где нельзя осмотреть товар перед покупкой, мы предлагаем делать покупки осмысленно. В сети розничных магазинов можно проконсультироваться с продавцами, осмотреть товары и уже потом принять решение о покупке.  Если вы уверены в покупке, то всегда можете воспользоваться службой доставки или забрать товар самовывозом.</p>
+											<blockquote> <i class="bi bi-chat-left-quote"></i>Я открыл магазин, чтобы покупатели со всего мира могли приобрести качественные товары, которые будут радовать их всю жизнь.</blockquote>
+											<p>В настоящее время в штате компании трудится более 100 человек. Наш успех напрямую зависит от каждого сотрудника. Персонал ПРОВОДКА РУ - сплоченная команда единомышленников, работающая в одном направлении для достижения общей цели. Сотрудники регулярно проходят обучение в центрах переподготовки крупнейших мировых производителей электронного оборудования. Нашим клиентам гарантируется вежливое и внимательное отношение, высокое качество обслуживания, абсолютная честность при подборе моделей, полностью отвечающих запросам потребителя.</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="comments">
+										<h3 class="comment-title">Комментарии ({{ comments.count }})</h3>
+										<center>
+										{% if messages %}
+										{% for message in messages %}
+											 <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+												<strong>{{ message }}</strong>
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+												  <span aria-hidden="true">&times;</span>
+												</button>
+											  </div>
+										{% endfor %}
+									{% endif %}
+									</center>
+										<div class="single-comment">
+										{% for comment in comments %}
+											<div class="content">
+												<h4>{{ comment.name }} <span>{{ comment.created }}</span></h4>
+												<p>{{ comment.body }}</p>
+										{% endfor %}
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="reply">
+										<div class="reply-head">
+											<h2 class="reply-title">Оставить комментарий</h2>
+											<form class="form"  method="POST" action=".">
+												{% csrf_token %}
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group">
+															{% for field in form %}
+															<label for="{{ field.name }}"><span>*</span>{{field.label}}</label>
+															{{ field }}
+															{% endfor %}
+														</div>
+													</div>
+													<div class="col-12">
+														<div class="form-group button">
+															<button type="submit" class="btn">Опубликовать комментарий</button>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+<section id="contact" class="contact">
+      <div class="container aos-init aos-animate" data-aos="fade-up">
+        <div class="section-title">
+          <h2 class="display-4">Местоположение</h2>
+          <p class="">Наше местоположение на карте</p>
+        </div>
+      </div>
+<div class="p-3" style="width: 100%">
+	<iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+			src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=%D0%9A%D1%83%D1%80%D1%81%D0%BA,%201-%D1%8F%20%D0%A4%D0%B0%D1%82%D0%B5%D0%B6%D1%81%D0%BA%D0%B0%D1%8F%2073/3+(%D0%9F%D1%80%D0%BE%D0%B2%D0%BE%D0%B4%D0%BA%D0%B0%20%D0%A0%D0%A3)&amp;t=h&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+	</iframe>
+</div>
+</section>
+</div>
+{% endblock content %}

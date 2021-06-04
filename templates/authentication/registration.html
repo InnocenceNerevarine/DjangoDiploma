@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="bread-inner">
+						<ul class="bread-list">
+							<li><a href="{% url 'home' %}">Главная<i class="bi bi-arrow-right"></i></a></li>
+							<li class="active"><a href="#">Регистрация</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    {% if not request.user.is_authenticated %}
+	 <div class="section-title">
+
+     </div>
+	  <div class="global-container">
+        <div class="card login-form">
+        <div class="card-body">
+            <h3 class="card-title text-center">Регистрация</h3>
+            <div class="card-text">
+                {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-info">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                <div class="container">
+            <div class="row">
+              <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                  <div class="card-body">
+                    <h5 class="card-title text-center">Вход в аккаунт</h5>
+                    <form class="form-signin" METHOD="POST" action="{% url 'register' %}">
+                        {% csrf_token %}
+                      <div class="form-label-group">
+                        <input type="text"  name="username"  value="{{ data.username }}" id="exampleInputEmail1" class="form-control" placeholder="Введите логин..." required autofocus>
+                        <label for="exampleInputEmail1">Логин</label>
+                      </div>
+                        <div class="form-label-group">
+                        <input type="email"  name="email"  value="{{ data.email }}" id="inputUsername" class="form-control" placeholder="Введите электронную почту..." required autofocus>
+                        <label for="inputUsername">Электронная почта</label>
+                      </div>
+                      <div class="form-label-group">
+                        <input type="password" name="password" value="{{ data.password }}" id="inputPassword1"  class="form-control" placeholder="Введите пароль..." required>
+                        <label for="inputPassword1">Пароль</label>
+                      </div>
+                        <div class="form-label-group">
+                        <input type="password" name="password2" value="{{ data.passwordrep }}" id="inputPassword2"  class="form-control" placeholder="Повторите пароль..." required>
+                        <label for="inputPassword2">Повторить пароль</label>
+                      </div>
+                      <div class="form-label-group">
+                        <input type="text" name="name"  value="{{ data.name }}" id="inputUsername1"  class="form-control" placeholder="Введите имя..." required>
+                        <label for="inputUsername1">Имя</label>
+                      </div>
+                      <div class="form-label-group">
+                        <input type="text" name="surname" value="{{ data.surname }}" id="inputSurname"  class="form-control" placeholder="Введите фамилию..." required>
+                        <label for="inputSurname">Фамилия</label>
+                      </div>
+                      <div class="form-label-group">
+                        <input type="text" name="address" value="{{ data.address }}" id="inputAddress"  class="form-control" placeholder="Введите адрес..." required>
+                        <label for="inputAddress">Адрес</label>
+                      </div>
+                      <div class="form-label-group">
+                        <input type="text" name="phone" id="inputPhone" value="{{ data.phone }}"  class="form-control" placeholder="Введите номер..." required>
+                        <label for="inputPhone">Номер телефона</label>
+                      </div>
+                      <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Зарегистрироваться</button>
+                      <hr class="my-4">
+                        <a href="{% url 'login' %}">
+                      <button class="btn btn-lg btn-danger btn-block text-uppercase" type="button"><i class="bi bi-person-circle mr-2"></i>Уже есть аккаунт?</button>
+                        </a>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            </div>
+        </div>
+    </div>
+          {% else %}
+          <div class="section-title">
+          <h2 class="display-4">Вы уже зарегистрированы :)</h2>
+        </div>
+          {% endif %}
+    </div>
+{% endblock content %}
