@@ -359,7 +359,7 @@ body{
 .img-fluid{
     width: 500px;
     height: 500px;
-    object-fit: cover;
+    object-fit: contain;
 }
 .image-pos{
      width: 200px;
@@ -521,6 +521,7 @@ body{
 	border-radius: 0;
 	width: 200px;
 	height: 200px;
+	object-fit: contain;
 }
 /*  Настройка текста ссылки на товар */
 .shopping-summery tbody .product-name a {
@@ -1128,12 +1129,12 @@ img {
 .tab-content {
   overflow: hidden;
 }
-.tab-content img {
-    transition: all 1.5s ease;
+.tab-content img{
+    width:300px;
+    height: 300px;
+    object-fit: contain;
 }
-.tab-content:hover img{
-     transform: scale(1.5);
-}
+
 /*  Увеличение картинки при наведении */
 /*  Настройка отображения карточки товара */
 .card {
@@ -1142,6 +1143,7 @@ img {
   background: #f5f5f5;
   padding: 3em;
   line-height: 1.5em;
+
 }
 /*  Отображения цвета цены */
 .price span {
@@ -1439,8 +1441,3 @@ img {
     font-weight: 600;
     color: #0062cc;
 }
-
-
-
-
-

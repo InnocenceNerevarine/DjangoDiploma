@@ -1,16 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.views import generic
 from django.views.generic import View, DetailView, ListView
 from django.db.models import Q
 from django.contrib import messages
 from .models import Category, Product, Commentary, OrderProduct, Order, Payment
-from .forms import ContactForm, SubscribeForm, CommentaryForm, UserUpdateForm
+from .forms import ContactForm, SubscribeForm, CommentaryForm, UpdateInfoForm
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 from ProvodkaShop.settings import EMAIL_HOST_USER, EMAIL_FROM_USER
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.mixins import LoginRequiredMixin
 from authentication.models import User
 import stripe
 from django.conf import settings
@@ -330,19 +331,22 @@ class CheckoutView(View):
 @login_required
 def profileup(request):
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
-        if u_form.is_valid():
-            u_form.save()
+        form = UpdateInfoForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
             messages.add_message(request, messages.SUCCESS,  f'Ваша информация была обновлена')
             return redirect('profile')
     else:
-        u_form = UserUpdateForm(instance=request.user)
+        form = UpdateInfoForm(instance=request.user)
 
     context = {
-        'u_form': u_form,
+        'form': form,
     }
 
     return render(request, 'profile_edit.html', context)
+
+
+
 
 
 

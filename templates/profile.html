@@ -52,7 +52,9 @@
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <a href="{% url 'profile_edit' %}">ddd</a>
+                        <button class="btn btn-primary">
+                          <a href="{% url 'profile_edit' %}">Редактировать профиль</a>
+                        </button>
                     </div>
                 </div>
                 <div class="row">
@@ -130,6 +132,7 @@
                                             </thead>
                                             <tbody>
                                                 {% for order in orders %}
+                                                {% if order.get_total != 0 %}
                                                     <tr>
                                                         <th scope="row">{{ order.id }}</th>
                                                         <td>{{ order.get_status_display }}</td>
@@ -142,7 +145,7 @@
                                                             </ul>
                                                         </td>
                                                         <td>
-                                                        <button class="btn btn-info" data-toggle="modal" data-target="#exampleModal-{{ order.id }}" >Дополнительно</button>
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal-{{ order.id }}">Дополнительно</button>
                                                         <div class="modal fade" id="exampleModal-{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                       <div class="modal-dialog modal-lg" role="document">
                                                         <div class="modal-content">
@@ -168,7 +171,7 @@
                                                                     {% for order_product in order.products.all %}
                                                                         <tr>
                                                                             <th scope="row">{{ order_product.product.title }}</th>
-                                                                            <td class="w-25"><img src="{{ order_product.product.image.url }}" class="img-fluid"></td>
+                                                                             <td class="image"><img src="{{ order_product.product.image.url }}"></td>
                                                                             <td><strong>{{ order_product.product.get_discount_price}} ₽.</strong> ₽.</td>
                                                                             <td>{{ order_product.quantity }}</td>
                                                                             <td>{{ order_product.get_total_item_price }} ₽.</td>
@@ -196,11 +199,13 @@
                                                         </div>
                                                         </td>
                                                     </tr>
+                                                {% endif %}
                                                 {% endfor %}
                                             </tbody>
                                             </table>
                                         </div>
                                  {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>

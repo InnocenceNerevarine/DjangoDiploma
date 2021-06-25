@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'ShopCore',
     'authentication',
     'import_export',
+    'crispy_forms'
 
 ]
 MIDDLEWARE = [
@@ -120,3 +121,5 @@ IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 # Переменная для модели юзера(Абстрактная)
 AUTH_USER_MODEL = 'authentication.User'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+ADMIN_SITE_HEADER = "Администрирование ПРОВОДКА РУ"

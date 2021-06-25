@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load crispy_forms_tags %}
 <div class="breadcrumbs">
 		<div class="container">
 			<div class="row">
@@ -14,21 +15,37 @@
 			</div>
 		</div>
 	</div>
-<center>
 	<form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Ваша информация</legend>
-            {% for field in u_form %}
+        <legend class="border-bottom mb-4">Ваша информация</legend>
         <div class="row">
-            {{field.label_tag}}
-            <div class="col-md-10">{{field}}</div>
+         <div class="col-6">
+         {{ form.first_name|as_crispy_field }}
+         </div>
+            <div class="col-6">
+         {{ form.last_name|as_crispy_field }}
+         </div>
         </div>
-        {% endfor %}
-        </fieldset>
+        <div class="row">
+            <div class="col-6">
+        {{ form.username|as_crispy_field }}
+            </div>
+            <div class="col-6">
+        {{ form.email|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+        {{ form.phone|as_crispy_field }}
+            </div>
+            <div class="col-6">
+        {{ form.address|as_crispy_field }}
+            </div>
+        </div>
+        {{ form.profile_pic|as_crispy_field }}
         <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">fdfs</button>
+           <button type="submit" class="btn btn-primary">Изменить</button>
         </div>
     </form>
-</center>
+</div>
 {% endblock content %}

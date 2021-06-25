@@ -125,7 +125,7 @@ class Order(models.Model):
     products = models.ManyToManyField(OrderProduct, verbose_name='Товары')
     ordered_date = models.DateTimeField(verbose_name='Дата оформления заказа')
     order_receive_date = models.DateField(verbose_name='Дата получения', null=True, blank=True)
-    ordered = models.BooleanField(default=False, verbose_name='Заказ оформлен')
+    ordered = models.BooleanField(default=False, verbose_name='Заказ оплачен')
     payment = models.ForeignKey('Payment', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Оплатил')
     status = models.CharField(
         max_length=100,
@@ -153,7 +153,7 @@ class Payment(models.Model):
                              verbose_name='Покупатель')
     stripe_charge_id = models.CharField(max_length=50, verbose_name='Идентификатор платежа')
     amount = models.IntegerField(verbose_name='Сумма')
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True, verbose_name='Дата платежа')
 
     class Meta:
         verbose_name = 'Платеж'

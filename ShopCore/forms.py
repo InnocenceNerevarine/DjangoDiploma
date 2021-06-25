@@ -48,13 +48,9 @@ class CommentaryForm(forms.ModelForm):
         fields = ['email', 'name', 'body']
 
 
-class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField(required=True, label='Электронная почта', widget=forms.EmailInput(
-        attrs={'class': 'newsletter-inner input'}))
-
+class UpdateInfoForm(forms.ModelForm):
 
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'phone', 'address', 'profile_pic']
-
+        fields = ['first_name', 'last_name', 'username', 'email', 'phone', 'address', 'profile_pic']
