@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-@&_dtkk_71x!fo7%r^*m_ix62u54ginq&+c#_0$2#0i1dcr-5l
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 STRIPE_SECRET_KEY = 'sk_test_51IgrwCEbODxaDCK41IuocujM1pRGfMpdmJhRLmJwVlSf6poqKjJlDFZk7O6i2UlTHSUL1Y4ktnaf14NxLhcgUmov00DL8osPQF'
 # Приложения
